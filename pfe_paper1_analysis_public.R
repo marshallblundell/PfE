@@ -2,7 +2,7 @@
 #     File Name           :     C:/Users/Marshall/Dropbox/Next 10 Social Programs in Electric Rates/Report1Repo/pfe_paper1_analysis_public.R
 #     Created By          :     Marshall Blundell
 #     Creation Date       :     [2020-10-21 14:39]
-#     Last Modified       :     [2021-02-20 10:37]
+#     Last Modified       :     [2021-02-22 11:25]
 #     Description         :      
 #
 #     Written in R Version 3.6.2.
@@ -25,6 +25,8 @@ dropbox.dir <- "C:/Users/Marshall/Dropbox/Next 10 Social Programs in Electric Ra
 
 # 
 # Function to run BTM PV production simulation using LBNL tracking the sun data and PV Watts
+#
+# If you wish to run this you must download LBNL's 2019 tracking the sun data and put it in the OriginalData\lbnl_pv_data_public_tts folder: https://emp.lbl.gov/tracking-the-sun
 #
 # Run-time is long because I pause to circumvent rate
 # limits in the PV Watts API. Repository has the output
