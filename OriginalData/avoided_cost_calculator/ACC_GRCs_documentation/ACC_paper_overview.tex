@@ -1,0 +1,179 @@
+
+\documentclass[11pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+\usepackage{setspace}
+
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2960}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{Created=Tuesday, April 19, 2011 13:53:53}
+%TCIDATA{LastRevised=Tuesday, April 30, 2013 22:43:51}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="Standard LaTeX\Blank - Standard LaTeX Article">}
+%TCIDATA{CSTFile=40 LaTeX article.cst}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+%\input{tcilatex}
+\setlength{\parindent}{0in}
+\renewcommand{\arraystretch}{.95}
+\geometry{left=.8 in,right=.8 in,top=.8 in,bottom=.8 in}
+
+\usepackage{graphicx}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{epsfig}
+\usepackage{epstopdf}
+\usepackage{subfigure}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\usepackage{listings}
+
+
+
+\begin{document}
+
+An accounting tool used by the California Public Utilities Commission serves as our point of departure for the estimation of the avoidable costs of electricity. \footnote{The Commission approved the first ACC in 2005 with Decision (D.) 05-04-24. Subsequent updates and reviews are available at $https://www.ethree.com/public_proceedings/energy-efficiency-calculator$.}  The Avoided Cost Calculator (ACC) is a spreadsheet-based model developed by Energy and Environmental Economics, Inc (E3).  It uses publicly available data to generate hourly forecasts of the marginal costs that a utility would avoid if demand were incrementally reduced. 
+
+The E3 ACC tool is designed to forecast the long-term cost implications of future electricity  demand growth in California. In contrast, our analysis is more retrospective. We aim to estimate how costs would have been impacted if realized electricity demand had been incrementally lower. To suit our application, we make several methodological modifications and refinements to the E3 approach. But we adopt the basic accounting structure which decomposes avoided costs per kWh into eight components: marginal energy costs; losses; GHG-related costs; ancillary services; marginal generation capacity costs; marginal transmission capacity costs; marginal distribution capacity costs. Figures X-Y show the relative importance of these estimated cost components, both across time and and across IOUs. 
+
+In what follows, we provide a conceptual overview of our methodology and underlying estimating equations. Additional details are reported in Appendix X.
+
+\subsection{Marginal Electricity Operating Costs}
+
+We use [XXX placeholder for specific refXXX] wholesale electricity prices to estimate  marginal operating costs.  In California, hourly locational marginal prices (LMPs) reflect not only the per kWh fuel and operations costs at a given location in time and space, but also the costs of purchasing GHG permits to offset emissions, congestion-related costs, and electricity losses due to long-distance transport.   [PLACEHOLDER FOR THE DA LMP PRODUCT - ARE THESE DIFFERENTIATED BY IOU? AND IF YES, HOW ARE PRICES AGGREGATED WITHIN IOU TERRITORY?]  
+
+For accounting purposes, we decompose observed hourly wholesale electricity prices  into marginal energy costs, GHG-related compliance costs, and losses. Let $i$ index the IOU territory. Let $t$ denote hour. The marginal energy cost $MEC_{it}$  is  defined as: 
+
+\begin{center}
+\begin{equation}
+\label{eq:MEC}
+MEC_{it} = (LMP_{it}- \underbrace{\tau_t \cdot MOER_{it}}_{\text{GHG costs}} ) \underbrace{(\frac{1}{1-dL/dQ} )}_{\text{ Loss  adjustment}}
+\end{equation}
+\end{center}
+
+To isolate the marginal cost of electricity generation, Equation \ref{eq:MEC} subtracts the per kWh GHG compliance costs incurred by the marginal producer from the LMP. This compliance cost is given by the product of the prevailing GHG permit price $\tau$ and the GHG emissions rate (measured in tons of $CO_2$/kWh) of the marginal generator.\footnote{We use quarterly GHG permit auction prices to calibrate $\tau$. These prices can be found at: $https://ww2.arb.ca.gov/sites/default/files/2020-08/results_summary.pdf$.}  If we assume that the marginal unit is a natural gas plant,  the marginal operating emissions rate ($MOER_t$) can be defined as:
+
+\begin{center}
+\begin{equation}
+\label{MOER}
+MOER_{it}= HeatRate_{it} \cdot 0.0585, 
+\end{equation}
+\end{center}
+
+where $HeatRate_{it}$ measures the fuel efficiency (in MMBtu/kWh) of electricity generation for the marginal producer in region $i$ and hour $t$. Multiplying by the carbon intensity of natural gas (0.0585 tons/MMBtu) yields an estimate of the GHG intensity of electricity production. 
+
+XXX THIS GHG FACTOR SEEMS OFF? WE SHOULD BE USING METRIC TONS TO BE CONSISTENT WITH THE PERMIT PRICE? SHOULD THIS BE 0.0530703 XXX?
+
+To estimate the marginal heat rate in Equation \ref{MOER}, we further assume that 
+the LMP accurately reflects the variable operating costs of marginal producers (i.e.fuel costs, non-fuel costs, and GHG compliance costs). Rearranging this equilibrium condition, we can define the marginal heat rate as:
+
+XXX THIS SEEMS NOT QUITE RIGHT/INTERNALLY INCONSISTENT GIVEN OUR LOSS ADJUSTMENT? XXX
+
+\begin{center}
+\begin{equation*}
+\label{eq:HR}
+HeatRate_{it} = (LMP_{it}  - NFC) / (GasPrice_{it} + 0.0585 * \tau_t)
+\end{equation*}
+\end{center}
+
+XXX WHAT DO WE ASSUME ABOUT THE NON FUEL PRICE PER KWH? WHERE DOES THIS COME FROM? AND WHERE DO WE GET OUR REGIONAL GAS PRICES?
+
+In addition to variable operating costs, hourly electricity prices reflect the  incremental cost of losses due to physical resistance as power is moved across the transmission network that connects producers to consumers.
+
+ [XXXSUMMARIZE SEVERIN'S LOSS FACTOR AND HOW WE USE IT TO IMPUTE MEC AND GHG COSTS FROM LMP XXX].
+
+Taken together, Equations \ref{eq:MEC}, \ref{MOER}, and \ref{eq:HR} are used to estimate three avoided cost components: marginal energy costs, GHG compliance costs, and losses. Figures Xa-c plot unweighted annual average measures of these avoidable cost estimates by utility. Marginal energy costs are the largest of these cost components, comprising 30-40 percent of avoided costs over the time period we consider.  As of 2019, GHG compliance costs comprise 18 percent of variable operating costs. Estimated losses increase avoidable costs by a 10-12 percent.
+
+\subsection{GHG externality costs}
+
+The monetized allowance value in \ref{eq:MEC} captures only a fraction of the total social cost of GHG emissions. Over the time period we consider, GHG permit prices in quarterly allowance auctions ranged from \$12-\$17/metric ton.\footnote{$ https://ww2.arb.ca.gov/sites/default/files/2020-08/results_summary.pdf$.}  These allowance prices fall well below standard estimates of the social cost of carbon (SCC). To account for these external GHG costs, we define a residual GHG cost component:
+
+\begin{center}
+\begin{equation*}
+GHG_{it}= (SCC-\tau{t})\cdot MOER_{it}
+\end{equation*}
+\end{center}
+
+Our preferred ACC estimates use a conservative SCC of $\50/ton$. Under this assumption, current GHG permit prices reflect only a fraction --34 percent -- of the true social cost of GHG emissions. Figures Xa-c  show how internalizing this GHG externality has an economically significant effect on our avoidable cost estimates. 
+
+\subsection{Marginal Capacity Costs}
+
+Conceptually, marginal capacity costs measure the cost impacts on generation, distribution, and transmission capacity investments from reductions in peak load. In principle, if peak demand for electricity in a utility service territory is reduced, some transmission projects, distribution system upgrades, and/or generation capacity investments could be deferred or avoided.  In practice, the ability to defer these investments will depend on a number of factors, such as the location and timing of peak demand reductions.
+
+We estimate three types of deferrable capacity costs. In what follows, we first describe how we estimate annualized capacity costs incurred by the three utilities. We then explain how these annual costs are allocated across hours. 
+
+\textbf{Marginal Transmission Capacity Costs:} The IOUs coordinate with the California Independent System Operator to plan ahead for transmission system investments. If peak load is reduced prior to a project implementation date,  a planned transmission project that is driven by anticipated increases in demand -- versus regulatory, safety, contractual, efficiency or other reasons -- could be ``deferrable.'' 
+
+The E3 ACC tool uses data from general rate case (GRC) data and data provided by the IOUs to identify planned transmission investments that have been classified as deferrable.  These avoidable capacity costs are presented as a system average annualized value for each utility, measured in terms of $\$/kW-yr$.  Our preferred ACC estimates incorporate these cost estimates directly. We note, however, that some stakeholders have challenged the idea that transmission investments are driven by load peak-load growth	(cite	CAISO	e.g.	2016-2017 TPP	at	102- 104). To illustrate the sensitivity of our AC estimates to these assumptions, we report alternative estimates which set marginal transmission capacity costs at zero (see Appendix X).
+
+
+\textbf{Marginal Distribution Capacity Costs:} The costs of operating, maintaining and replacing distribution equipment, once installed, are generally independent of electricity consumption levels.  However, there are two types of distribution system investments that can be sensitive to rates of demand growth. First, distribution reinforcement investments provide capacity to meet demand growth on the existing system. Second, distribution investments for primary line extensions may be needed as electricity customers move into new areas. 
+
+The E3 Avoided Cost Calculator leverages information reported in general rate cases to estimate the value of deferring or avoiding investments in distribution infrastructure through reductions in distribution peak capacity needs. We use these annualized costs to construct our preferred estimates of maginal distribution capacity costs. However, we note that several stakeholders have challenged the idea that peak load reductions could defer distribution upgrades.  Recognizing that our preferred estimates may over-estimate distribution investment costs that are truly avoidable, we also report AC estimates that set the MDCC component to zero.
+
+\textbf{Marginal Generation Capacity Costs:}  In years when demand is forecast to increase, the marginal generation cost captures the cost of procuring and operating new generation capacity (measured in terms of dollars per kilowatt-year).  In forward-looking E3 ACC calculations, these marginal generation capacity costs are typically based on the levelized capital cost of a new simple cycle CT unit net of profits earned in energy and ancillary service markets. 
+
+In years when peak demand is not forecast to increase, the MGCC captures the going-forward fixed cost of operating existing generation resources net of energy gross margins earned in the energy and ancillary services markets.  In GRC proceedings, these going-forward fixed cost consist of fixed O&M, insurance and property tax costs incurred to keep marginal generation operating. Based on these reported costs, our preferred avoidable cost estimates assume an MGCC of \$30/kW-year. \footnote{For example, PG&E has calculated a Net Present Value (NPV) sum of the six years of MGCCs and then converted this NPV to a levelized value. PG&E used its after-tax Weighted Average Cost of Capital (WACC) of 7.0 percent. The estimated net costs of capacity:  \$30.23/kW-year, \$29.62/kW-yr, \$28.53/kW-yr, \$27.63/kW-yr, \$27.70/kW-yr and \$27.42/kW-yr for 2017 through 2022, respectively.} 
+
+
+XXX 	TO PUT THIS IN CONTEXT, IS IT WORTH NOTING THAT THE Resource Adequacy (RA) waiver trigger price OVER THIS PERIOD WAS \$40/kW-year XXX
+
+XXX WE ARE BASICALLY SAYING THAT PEAK DEMAND WAS NOT INCREASING OVER TIME IN OUR STUDY . BASED ON FERC FORM 1, APPROX TRUE IN RECENT YEARS (SCE AN EXCEPTION). DO WE CITE THIS EXPLICITLY?
+
+\textbf{Hourly Allocation of Capacity Costs:} To estimate hourly avoidable costs, these marginal capacity costs (\$/kW-yr) must be allocated across hours of the year. Intuitively, these costs should be allocated to the hours when demand is likely to be highest.  We use historical load data to summarize systematic variation in hourly IOU load over the period 2005-2019. To implement this approach, we regress hourly load in year $L_{ty}$ on hour-of-day-by-month fixed effects $\alpha_{hm}$, day-of-week fixed effects $\alpha_d$, and a set if holiday indicators:
+
+\begin{equation}
+
+L_{ty}= \alpha_{hm} + \alpha_{d} + \delta_{hol} +\epsilon{t}
+
+\end{equation}
+
+The regression residual captures variation in realized load that cannot be captured by our suite of fixed effects. We then use these estimated regression coefficients to predict hourly load within each year. 
+
+XXX IF WE ARE ESTIMATING LOAD IN YEAR Y, WHAT YEARS ARE USED TO ESTIMATE THIS REGRESSION? A ROLLING 5 YEAR WINDOW INCLUSIVE OF Y?XX  
+
+For each year, we rank the hourly load estimates in descending order. Load in the 501st hour is used to define a load threshold $T_y$. Non-zero weights for hours that exceed this threshold are defined as:
+
+\begin{equation}
+
+w_{ty} = \frac{\overhat{L_ty} - T_y}{\sum(L_{ty}-T_y)}
+
+\end{equation}
+
+These are the weights we use to assign marginal capacity costs (for transmission, distribution, and generation} across hours of a year.  Because weights do not vary across IOUs (XX EXPLAIN WHY?XX), any within-hour differences in marginal capacity costs are driven by differences in the underlying deferrable investment cost estimates.
+
+Figures X-Z help to illustrate the relative importance of these avoidable capacity cost components. Across utilities, the marginal distribution capacity costs are the most significant. Generation capacity costs are stable across years and IOUs by design.  
+
+
+
+
+\end{document}
+
+
