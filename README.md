@@ -1,9 +1,9 @@
 # PfE
 How Should California Pay for Electricity? Efficiency and Distributional Considerationsof Alternative Funding Mechanisms
 
-Code contained in the replication package can be used to build the data files and generate all figures in the paper.
+Code contained in the replication package can be used to build the data files and generate all figures in the paper. The repository also includes spreadsheets we use to estimate CARE, BTM PV, and RPS rate impacts, as well as derive income based fixed charges: "Tables\RPS_BTM_PV_analysis_NEM2.0.xlsx", and "Tables\incomebasedfixedcharges_post.xlsx".
 
-Some steps of the analysis are encoded as functions that the code does not run by default. Rather, the repository includes output from these steps in the "ModifiedData" folder. This speeds up run time and means steps that make calls to API or do intensive data cleaning are only performed once. These steps include:
+In the R code, some steps of the analysis are encoded as functions that the code does not run by default. Rather, the repository includes output from these steps in the "ModifiedData" folder. This speeds up run time and means steps that make calls to an API or do intensive data cleaning are only performed once. These steps include:
 
 1) BTM PV production simulation using LBNL tracking the sun data and PV Watts
 2) Ferc form 1 data cleaning
